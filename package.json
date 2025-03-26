@@ -1,9 +1,9 @@
 {
   "name": "iot_demonstration",
+  "homepage": "https://moquan4543.github.io/NTCU_IntroductionToIoT_Homework/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://moquan4543.github.io/NTCU_IntroductionToIoT_Homework",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
