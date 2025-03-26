@@ -3,23 +3,21 @@ import {QRCodeCanvas} from "qrcode.react";
 import "./App.css"
 
 const REWARDS = [
-    { name: "10 金幣", probability: 0.4 },
-    { name: "50 金幣", probability: 0.3 },
-    { name: "100 金幣", probability: 0.15 },
-    { name: "500 金幣", probability: 0.1 },
-    { name: "1000 金幣", probability: 0.05 },
+    { name: "未中獎，請下次努力", probability: 0.4 },
+    { name: "50 彥靖幣", probability: 0.3 },
+    { name: "100 彥靖幣", probability: 0.15 },
+    { name: "500 彥靖幣", probability: 0.1 },
+    { name: "1000 彥靖幣", probability: 0.05 },
 ];
 
 const getReward = (code) => {
     if (!code) return "無效的 QR Code";
 
-    // 轉換字串為數字哈希
     let hash = 0;
     for (let i = 0; i < code.length; i++) {
         hash = (hash * 31 + code.charCodeAt(i)) % 100;
     }
 
-    // 獎品分配
     let threshold = 0;
     for (const reward of REWARDS) {
         threshold += reward.probability * 100;
