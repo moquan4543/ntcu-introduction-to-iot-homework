@@ -4,56 +4,12 @@ import "./App.css"
 
 function App() {
 
-    const htmlContent = `<!DOCTYPE html><html><head><title>貪吃蛇</title><style>
-html{max-width: 750px}
-body{margin:0;text-align:center;background:whitesmoke}canvas{background:white;display:block;margin:auto}
-.controls{display:flex;flex-direction:column;align-items:center;margin-top:10px}
-.row{display:flex}button{width:6rem;height:6rem;font-size:20px;margin:2px;background:gray;color:white;border:none}
-</style></head><body><canvas id=game width=600 height=600></canvas>
-<div class=controls><button id=up>up</button><div class=row>
-<button id=left>left</button><button id=down>down</button><button id=right>right</button>
-</div></div><script>
-let c=document.getElementById("game"),ctx=c.getContext("2d"),
-px=10,py=10,ax=5,ay=5,xv=0,yv=0,trail=[],tail=5;
-function setDirection(x,y){xv=x;yv=y}
-document.addEventListener("keydown",e=>setDirection((e.keyCode-38)%2,(e.keyCode-39)%2));
-document.getElementById("up").addEventListener("touchstart",()=>setDirection(0,-1));
-document.getElementById("down").addEventListener("touchstart",()=>setDirection(0,1));
-document.getElementById("left").addEventListener("touchstart",()=>setDirection(-1,0));
-document.getElementById("right").addEventListener("touchstart",()=>setDirection(1,0));
-setInterval(()=>{
-px+=xv;py+=yv;
-if(px<0)px=59;if(px>59)px=0;if(py<0)py=59;if(py>59)py=0;
-ctx.fillStyle="black";ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle="lime";
-trail.push({x:px,y:py});
-while(trail.length>tail)trail.shift();
-trail.forEach((t,i)=>{
-ctx.fillRect(t.x*10,t.y*10,10,10);
-if(t.x==px&&t.y==py&&i<trail.length-1)tail=5;
-});
-ctx.fillStyle="red";
-ctx.fillRect(ax*10,ay*10,10,10);
-if(px==ax&&py==ay){tail++;ax=Math.floor(Math.random()*20);ay=Math.floor(Math.random()*60);}
-ctx.fillStyle = "white";
-ctx.font="20px Arial";
-ctx.fillText("current length: " + tail, 410, 20);
-},100);
-</script></body></html>`;
-
-    const encodeHTMLToDataURL = () => {
-        const dataURL =  "data:text/html;base64," + btoa(unescape(encodeURIComponent(htmlContent)));
-        setQrData(dataURL);
-    }
-
-    const [qrData, setQrData] = useState("");
-
     return (
         <div className='qrcode'>
             <h1>🎉 QR Code 貪吃蛇遊戲 🎉</h1>
             <button className="button" onClick={encodeHTMLToDataURL}>生成 QR Code</button>
-            <div>
-                {qrData && <QRCodeCanvas value={qrData} size={550} bgColor={"#000000"} fgColor={"#FFFFFF"} marginSize={1}/>}
+            <div className="qrcodeImg">
+                <img src="/snake.png" alt="data:text/html;base64,PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PHRpdGxlPuiyquWQg+ibhzwvdGl0bGU+PHN0eWxlPgpodG1se21heC13aWR0aDogNzUwcHh9CmJvZHl7bWFyZ2luOjA7dGV4dC1hbGlnbjpjZW50ZXI7YmFja2dyb3VuZDp3aGl0ZXNtb2tlfWNhbnZhc3tiYWNrZ3JvdW5kOndoaXRlO2Rpc3BsYXk6YmxvY2s7bWFyZ2luOmF1dG99Ci5jb250cm9sc3tkaXNwbGF5OmZsZXg7ZmxleC1kaXJlY3Rpb246Y29sdW1uO2FsaWduLWl0ZW1zOmNlbnRlcjttYXJnaW4tdG9wOjEwcHh9Ci5yb3d7ZGlzcGxheTpmbGV4fWJ1dHRvbnt3aWR0aDo2cmVtO2hlaWdodDo2cmVtO2ZvbnQtc2l6ZToyMHB4O21hcmdpbjoycHg7YmFja2dyb3VuZDpncmF5O2NvbG9yOndoaXRlO2JvcmRlcjpub25lfQo8L3N0eWxlPjwvaGVhZD48Ym9keT48Y2FudmFzIGlkPWdhbWUgd2lkdGg9NjAwIGhlaWdodD02MDA+PC9jYW52YXM+CjxkaXYgY2xhc3M9Y29udHJvbHM+PGJ1dHRvbiBpZD11cD51cDwvYnV0dG9uPjxkaXYgY2xhc3M9cm93Pgo8YnV0dG9uIGlkPWxlZnQ+bGVmdDwvYnV0dG9uPjxidXR0b24gaWQ9ZG93bj5kb3duPC9idXR0b24+PGJ1dHRvbiBpZD1yaWdodD5yaWdodDwvYnV0dG9uPgo8L2Rpdj48L2Rpdj48c2NyaXB0PgpsZXQgYz1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZ2FtZSIpLGN0eD1jLmdldENvbnRleHQoIjJkIiksCnB4PTEwLHB5PTEwLGF4PTUsYXk9NSx4dj0wLHl2PTAsdHJhaWw9W10sdGFpbD01OwpmdW5jdGlvbiBzZXREaXJlY3Rpb24oeCx5KXt4dj14O3l2PXl9CmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLGU9PnNldERpcmVjdGlvbigoZS5rZXlDb2RlLTM4KSUyLChlLmtleUNvZGUtMzkpJTIpKTsKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInVwIikuYWRkRXZlbnRMaXN0ZW5lcigidG91Y2hzdGFydCIsKCk9PnNldERpcmVjdGlvbigwLC0xKSk7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkb3duIikuYWRkRXZlbnRMaXN0ZW5lcigidG91Y2hzdGFydCIsKCk9PnNldERpcmVjdGlvbigwLDEpKTsKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxlZnQiKS5hZGRFdmVudExpc3RlbmVyKCJ0b3VjaHN0YXJ0IiwoKT0+c2V0RGlyZWN0aW9uKC0xLDApKTsKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInJpZ2h0IikuYWRkRXZlbnRMaXN0ZW5lcigidG91Y2hzdGFydCIsKCk9PnNldERpcmVjdGlvbigxLDApKTsKc2V0SW50ZXJ2YWwoKCk9PnsKcHgrPXh2O3B5Kz15djsKaWYocHg8MClweD01OTtpZihweD41OSlweD0wO2lmKHB5PDApcHk9NTk7aWYocHk+NTkpcHk9MDsKY3R4LmZpbGxTdHlsZT0iYmxhY2siO2N0eC5maWxsUmVjdCgwLDAsYy53aWR0aCxjLmhlaWdodCk7CmN0eC5maWxsU3R5bGU9ImxpbWUiOwp0cmFpbC5wdXNoKHt4OnB4LHk6cHl9KTsKd2hpbGUodHJhaWwubGVuZ3RoPnRhaWwpdHJhaWwuc2hpZnQoKTsKdHJhaWwuZm9yRWFjaCgodCxpKT0+ewpjdHguZmlsbFJlY3QodC54KjEwLHQueSoxMCwxMCwxMCk7CmlmKHQueD09cHgmJnQueT09cHkmJmk8dHJhaWwubGVuZ3RoLTEpdGFpbD01Owp9KTsKY3R4LmZpbGxTdHlsZT0icmVkIjsKY3R4LmZpbGxSZWN0KGF4KjEwLGF5KjEwLDEwLDEwKTsKaWYocHg9PWF4JiZweT09YXkpe3RhaWwrKztheD1NYXRoLmZsb29yKE1hdGgucmFuZG9tKCkqMjApO2F5PU1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSo2MCk7fQpjdHguZmlsbFN0eWxlID0gIndoaXRlIjsKY3R4LmZvbnQ9IjIwcHggQXJpYWwiOwpjdHguZmlsbFRleHQoImN1cnJlbnQgbGVuZ3RoOiAiICsgdGFpbCwgNDEwLCAyMCk7Cn0sMTAwKTsKPC9zY3JpcHQ+PC9ib2R5PjwvaHRtbD4="/>
             </div>
         </div>
     );

@@ -26,3 +26,9 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.qrcodeImg {
+  width: 550px;
+  height: 550px;
+  margin: 0.5rem;
+}
