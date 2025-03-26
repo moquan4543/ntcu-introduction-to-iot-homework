@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/NTCU_IntroductionToIoT_Homework"
+  base: "/ntcu-introduction-to-iot-homework"
 })
