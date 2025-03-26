@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {QRCodeCanvas} from "qrcode.react";
 import "./App.css"
 
 const REWARDS = [
-    { name: "未中獎，請下次努力", probability: 0.4 },
-    { name: "50 彥靖幣", probability: 0.3 },
-    { name: "100 彥靖幣", probability: 0.15 },
-    { name: "500 彥靖幣", probability: 0.1 },
-    { name: "1000 彥靖幣", probability: 0.05 },
+    { name: "❌ 未中獎，請下次努力 ❌", probability: 0.4 },
+    { name: "💲 50 彥靖幣 💲", probability: 0.3 },
+    { name: "💵 100 彥靖幣 💵", probability: 0.15 },
+    { name: "💰 500 彥靖幣 💰", probability: 0.1 },
+    { name: "💶💶 1000 彥靖幣 💶💶", probability: 0.05 },
 ];
 
 const getReward = (code) => {
@@ -32,6 +32,10 @@ function App() {
     const [qrCode, setQrCode] = useState("");
     const [reward, setReward] = useState("");
 
+    const redeemCode = useMemo(() => {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("code") || "尚未抽獎";
+    }, []);
     const generateQRCode = () => {
         const randomCode = Math.random().toString(36).substr(2,8);
         const url = `${window.location.origin}/?code=${randomCode}`;
@@ -62,7 +66,8 @@ function App() {
             ) : (
                 <>
                     <h1>抽獎結果如下</h1>
-                    <p>{reward}</p>
+                    <h2>{reward}</h2>
+                    <p>你的號碼是: {redeemCode}</p>
                 </>
             )}
         </div>
